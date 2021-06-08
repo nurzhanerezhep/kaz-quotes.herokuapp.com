@@ -72,6 +72,11 @@ class RequestAPI:
         return result
 
 
+@app.get('/')
+def home_page():
+    return 'Hi this my project /countries/ and /quotes/ '
+
+
 @app.get('/countries')
 def countries():
     return countries_db
