@@ -101,4 +101,4 @@ def quotes_for_colleagues(name):
 @app.get('/quotes')
 def just_qoute(name):
     my_request_quote = RequestAPI()
-    return my_request_quote.get_quote()
+    return my_request_quote.get_content()
