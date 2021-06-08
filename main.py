@@ -93,6 +93,12 @@ def countries(name):
 
 # quote
 @app.get('/quotes/{name}')
-def colleagues(name):
+def quotes_for_colleagues(name):
     my_request = RequestAPI()
     return my_request.get_text_with_quote_for_name(name)
+
+
+@app.get('/quotes')
+def just_qoute(name):
+    my_request_quote = RequestAPI()
+    return my_request_quote.get_quote()
