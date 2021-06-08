@@ -1,49 +1,92 @@
+# import random
 import requests
-import random
 from fastapi import FastAPI
 
 app = FastAPI()
-url = 'https://api.adviceslip.com/advice'
-marcus_aurelius_quotes = [
-    'Если что-то кажется тебе слишком трудным, не думай, что это за пределами сил человека',
-    'Начинай уже сейчас жить той жизнью, какой ты хотел бы видеть ее в конце',
-    'Надо покорять умом то, что нельзя одолеть силой.'
-]
+
+colleagues = ['Saken', 'Aliya', 'Shinbolat']
+
+colleagues_db = {
+    'Saken': {
+        'room_number': '504',
+        'age': 28,
+    },
+    'Aliya': {
+        'room_number': '504',
+        'age': 28,
+    },
+    'Shinbolat': {
+        'room_number': '327',
+        'age': 28,
+    }
+}
+countries = ['Japan', 'Egypt', 'Iran', 'Turkish', 'France']
+
+countries_db = {
+    'Japan': {
+        'population': '125 410 000',
+        'city': 'Tokyo',
+        'president': 'Haryhito'
+    },
+    'Egypt': {
+        'population': '102 079 960	',
+        'city': 'Kair',
+        'president': 'Abdul-fattah As-sisi'
+    },
+    'Iran': {
+        'population': '85 194 842',
+        'city': 'Tegeran',
+        'president': 'Hasan Ryhani'
+    },
+    'Turkish': {
+        'population': '83 154 997',
+        'city': 'Ankara',
+        'president': 'Redjep Tayip Erdogan'
+    },
+    'France': {
+        'population': '68 859 599',
+        'city': 'Paris',
+        'president': 'Emmanyel Makron'
+    }
+}
 
 
-@app.get('/')
-def home_page():
-    return 'Добро пожаловать на pet-проект Татьяны'
+class RequestAPI:
+    url = 'https://api.quotable.io/random'
+
+    def get_quote(self):
+        response = requests.get(self.url)
+
+        if response.status_code == 200:
+            quote = response.json()
+            return quote
+        else:
+            return 'Qate'
+
+    def get_content(self):
+        quote = self.get_quote()
+        return quote['content']
+
+    def get_text_with_quote_for_name(self, name):
+        result = 'Hi %s. You must read this text: %s' % (name.capitalize(), self.get_content())
+        return result
 
 
-@app.get('/give-advice')
-def give_advice():
-    advice = get_advice_by_url(url)
+@app.get('/countries')
+def countries():
+    return countries_db
 
-    if advice:
-        return advice
+
+@app.get('/countries/{name}')
+def countries(name):
+    if name in countries_db:
+        return countries_db[name]
     else:
-        return 'Opps'
+        return 'Qate'
 
 
-@app.get('/give-advice/{name}')
-def give_personal_advice(name):
-    advice = get_advice_by_url(url)
-
-    if advice:
-        ma_quote = random.choice(marcus_aurelius_quotes)
-        return '%s, мой вам совет на сегодня: %s. И совет от Марка Аврелия: %s' % (name.capitalize(), advice, ma_quote)
-    else:
-        return 'Opps'
-
-
-def get_advice_by_url(url):
-    response = requests.get(url)
-
-    if response.status_code == 200:
-        result = response.json()
-        advice = result['slip']['advice']
-
-        return advice
-    else:
-        return False
+# quote
+@app.get('/quotes/{name}')
+def colleagues(name):
+    my_request = RequestAPI()
+    return my_request.get_text_with_quote_for_name(name)
