@@ -74,7 +74,7 @@ class RequestAPI:
 
 @app.get('/')
 def home_page():
-    return 'Hi this my first project in Heroku\n' \
+    return 'Hi this my first project in Heroku ' \
            'you can use two link: /countries/ and /quotes/ '
 
 
