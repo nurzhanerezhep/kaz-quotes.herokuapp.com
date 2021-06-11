@@ -1,12 +1,12 @@
 import requests
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
-#from fastapi.staticfiles import StaticFiles
+# from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
-#app.mount("/static", StaticFiles(directory="static"), name="static")
+# app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 colleagues = ['Saken', 'Aliya', 'Shinbolat']
@@ -96,10 +96,17 @@ def countries(name):
 
 
 # quote
-@app.get('/quotes/{name}')
+"""@app.get('/quotes/{name}')
 def quotes_for_colleagues(name):
     my_request = RequestAPI()
-    return my_request.get_text_with_quote_for_name(name)
+    return my_request.get_text_with_quote_for_name(name)"""
+
+
+@app.get("/quotes/{name}", response_class=HTMLResponse)
+async def read_item(request: Request, name: str):
+    my_request = RequestAPI()
+    return templates.TemplateResponse("quotes.html", {
+        "request": request, "name": my_request.get_text_with_quote_for_name(name)})
 
 
 @app.get('/quotes')
