@@ -111,6 +111,8 @@ async def read_item(request: Request, name):
 
 
 @app.get('/quotes')
-def just_qoute():
+async def just_qoute(request: Request):
     my_request_quote = RequestAPI()
-    return my_request_quote.get_content()
+    text = my_request_quote.get_content()
+    return templates.TemplateResponse("quotes.html", {
+        "request": request, "name": text})
