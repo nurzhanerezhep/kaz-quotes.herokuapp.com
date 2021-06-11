@@ -1,5 +1,5 @@
-import requests
-from fastapi import FastAPI
+#import requests
+from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 
 app = FastAPI()
@@ -55,7 +55,7 @@ class RequestAPI:
     url = 'https://api.quotable.io/random'
 
     def get_quote(self):
-        response = requests.get(self.url)
+        response = Request.get(self.url)
 
         if response.status_code == 200:
             quote = response.json()
