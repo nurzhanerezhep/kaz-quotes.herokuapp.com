@@ -1,8 +1,13 @@
-#import requests
+import requests
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
 
 colleagues = ['Saken', 'Aliya', 'Shinbolat']
 
@@ -55,7 +60,7 @@ class RequestAPI:
     url = 'https://api.quotable.io/random'
 
     def get_quote(self):
-        response = Request.get(self.url)
+        response = requests.get(self.url)
 
         if response.status_code == 200:
             quote = response.json()
@@ -72,19 +77,9 @@ class RequestAPI:
         return result
 
 
-@app.get('/')
-async def read_items():
-    html_content = """
-    <html>
-        <head>
-            <title>Some HTML in here</title>
-        </head>
-        <body>
-            <h1>Look ma! HTML!</h1>
-        </body>
-    </html>
-    """
-    return HTMLResponse(content=html_content, status_code=200)
+@app.get('/', response_class=HTMLResponse)
+async def read_items(request: Request):
+    return templates.TemplateResponse("item.html", {"request": request})
 
 
 @app.get('/countries')
