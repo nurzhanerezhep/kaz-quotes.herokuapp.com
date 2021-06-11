@@ -1,4 +1,4 @@
-# import random
+from sklearn import datasets, svm
 import requests
 from fastapi import FastAPI
 
@@ -74,8 +74,12 @@ class RequestAPI:
 
 @app.get('/')
 def home_page():
-    return 'Hi this my first project in Heroku ' \
-           'you can use two link: /countries/ and /quotes/ '
+    clf = svm.SVC(gamma=0.001, C=100.)
+    clf.fit(digits.data[:-1], digits.target[:-1])
+    prediction = clf.predict(digits.data[-1:])
+    """return 'Hi this my first project in Heroku ' \
+           'you can use two link: /countries/ and /quotes/ '"""
+    return prediction
 
 
 @app.get('/countries')
