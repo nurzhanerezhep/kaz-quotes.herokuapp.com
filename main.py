@@ -1,4 +1,4 @@
-from sklearn import datasets, svm
+from flask import Flask, render_template
 import requests
 from fastapi import FastAPI
 
@@ -74,13 +74,9 @@ class RequestAPI:
 
 @app.get('/')
 def home_page():
-    digits = datasets.load_digits()
-    clf = svm.SVC(gamma=0.001, C=100.)
-    clf.fit(digits.data[:-1], digits.target[:-1])
-    prediction = clf.predict(digits.data[-1:])
-    """return 'Hi this my first project in Heroku ' \
+        """return 'Hi this my first project in Heroku ' \
            'you can use two link: /countries/ and /quotes/ '"""
-    return prediction
+    return render_template('index.html')
 
 
 @app.get('/countries')

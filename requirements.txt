@@ -4,4 +4,4 @@ gunicorn
 uvicorn
 jinja2
 aiofiles
-sklearn
+flask
