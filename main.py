@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import render_template
 import requests
 from fastapi import FastAPI
 
@@ -72,10 +72,9 @@ class RequestAPI:
         return result
 
 
-@app.get('/')
+@app.route('/')
 def home_page():
-        """return 'Hi this my first project in Heroku ' \
-           'you can use two link: /countries/ and /quotes/ '"""
+    #return 'Hi this my first project in Heroku you can use two link: /countries/ and /quotes/ '
     return render_template('index.html')
 
 
