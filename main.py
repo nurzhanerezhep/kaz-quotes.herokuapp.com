@@ -1,5 +1,5 @@
 import requests
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -78,8 +78,8 @@ class RequestAPI:
 
 
 @app.get('/', response_class=HTMLResponse)
-async def read_items(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+async def read_items():
+    return templates.TemplateResponse("index.html")
 
 
 @app.get('/countries')
