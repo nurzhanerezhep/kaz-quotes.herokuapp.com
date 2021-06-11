@@ -102,11 +102,12 @@ def quotes_for_colleagues(name):
     return my_request.get_text_with_quote_for_name(name)"""
 
 
-@app.get("/quotes/{name}", response_class=HTMLResponse)
-async def read_item(request: Request, name: str):
+@app.get('/quotes/{name}', response_class=HTMLResponse)
+async def read_item(request: Request, name):
     my_request = RequestAPI()
+    text = my_request.get_text_with_quote_for_name(name)
     return templates.TemplateResponse("quotes.html", {
-        "request": request, "name": my_request.get_text_with_quote_for_name(name)})
+        "request": request, "name": text})
 
 
 @app.get('/quotes')
