@@ -1,6 +1,6 @@
-from flask import render_template
 import requests
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 
 app = FastAPI()
 
@@ -72,10 +72,19 @@ class RequestAPI:
         return result
 
 
-@app.route('/')
-def home_page():
-    #return 'Hi this my first project in Heroku you can use two link: /countries/ and /quotes/ '
-    return render_template('index.html')
+@app.get('/')
+async def read_items():
+    html_content = """
+    <html>
+        <head>
+            <title>Some HTML in here</title>
+        </head>
+        <body>
+            <h1>Look ma! HTML!</h1>
+        </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content, status_code=200)
 
 
 @app.get('/countries')
