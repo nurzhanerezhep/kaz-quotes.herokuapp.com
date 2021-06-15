@@ -1,5 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+
+{% block content %}
+      <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+            <h2 class="display-4 fst-italic"> {{ name }} </h2>
+            <p class="lead my-3">{{ text }}</p>
+            <p class="lead mb-0"><a href="#" class="text-white fw-bold">{{link_text}}</a></p>
+      </div>
+{% endblock %}
+
+
+<!--
+
 <head>
     <title>Item Details</title>
     <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
@@ -9,3 +20,4 @@
 
 </body>
 </html>
+-->

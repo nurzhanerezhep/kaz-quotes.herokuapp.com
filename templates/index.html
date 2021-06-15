@@ -1,27 +1,53 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Some HTML in here</title>
-    </head>
-    <body>
-        <h2 align="center">
-            This is quotes app!
-        </h2>
-        <h4 align="center">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbT-a8h_KBmTfi1XTpzwrAFJ2mGu7R9wLqAQ&usqp=CAU" />
-        </h4>
-        <h4 align="center">
-            The
-            <font color="FF0000">
-                <a href="https://kaz-quotes.herokuapp.com/quotes"> quots </a></li>
-            </font>
-            generation by site('https://api.quotable.io/random')
-        </h4>
-        <h5 align="center">
-            The project repository in git:
-            <font color="FF0000">
-                <a href="https://github.com/nurzhanerezhep/kaz-quotes_herokuapp_com.git">kaz-quotes.herokuapp.com</a></li>
-            </font>
-        </h5>
-    </body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+
+<article class="blog-post">
+    <h2 class="blog-post-title">About PET author</h2>
+    <p class="blog-post-meta">December 14, 2020 by <a href="#">Nurzhan</a></p>
+    <div class="col mb-2">
+        <div class="row-md-6">
+            <div class="row g-0 border rounded overflow-hidden
+            flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <p>
+                        Working in Department of Theoretical and Nuclear Physics</p>
+                    <p>
+                        Born in 1993,
+                        a PhD student,
+                        graduated in 2015 with a bachelor's degree in physics
+                        from the specialty "Nuclear Physics"
+                        and through the year entered the master's degree in physics.
+                        Finished with a master's degree in "Nuclear Physics",
+                        since 2018. is studying for a doctorate at al-Farabi KazNU,
+                        specialty "Nuclear Physics".
+                    </p>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img src="static/me.jpg" alt="Italian Trulli" width="223" height="250">
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul>
+        <p>
+            He is engaged in research activities in the laboratory of variations of cosmic rays
+            of the physical and technical faculty of KazNU. Al-Farabi since 2013.
+            Has an internship as a teacher in the secondary school in physics and mathematics.
+        </p>
+        <li>050000, Almaty, Kazakhstan</li>
+        <li>email: nurzhan.yerezhep@gmail.com</li>
+        <li>Date of birth: 25 May</li>
+    </ul>
+    <p>
+        The project repository in git:
+        <font color="FF0000">
+            <a href="https://github.com/nurzhanerezhep/kaz-quotes_herokuapp_com.git">
+                kaz-quotes.herokuapp.com
+            </a>
+        </font>
+    </p>
+
+</article>
+
+{% endblock %}

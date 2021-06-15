@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<article class="blog-post">
+    <h2 class="blog-post-title">
+        <strong class="d-inline-block mb-2 text-primary">The world Covid statistic</strong>
+    </h2>
+    <p class="blog-post-meta">The last updated day: {{Day}} in time: <a href="#">{{Time}}</a></p>
+    <p>
+        This is some additional statistic  from Coronavirus COVID19 API.
+    </p>
+    <p>
+        It has been read from <a href="#">https://api.covid19api.com/summary</a>
+    </p>
+    <h3>Statistic table</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name of parameter</th>
+            <th>Numbers</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>New Confirmed</td>
+            <td>{{NewConfirmed}}</td>
+        </tr>
+        <tr>
+            <td>Total Confirmed</td>
+            <td>{{TotalConfirmed}}</td>
+        </tr>
+        <tr>
+            <td>New Deaths</td>
+            <td>{{NewDeaths}}</td>
+        </tr>
+        <tr>
+            <td>Total Deaths</td>
+            <td>{{TotalDeaths}}</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td>New Recovered</td>
+            <td>{{NewRecovered}}</td>
+        </tr>
+        <tr>
+            <td>Total Recovered</td>
+            <td>{{TotalRecovered}}</td>
+        </tr>
+        </tfoot>
+    </table>
+    <p>Take care of yourself and loved ones</p>
+</article>
+
+
+{% endblock %}

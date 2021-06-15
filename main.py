@@ -6,8 +6,8 @@ from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 colleagues = ['Saken', 'Aliya', 'Shinbolat']
 
@@ -56,6 +56,22 @@ countries_db = {
 }
 
 
+class RequestCOVID:
+    url = 'https://api.covid19api.com/summary'
+    payload = {}
+    headers = {}
+
+    def get_covid(self):
+        payload = {}
+        headers = {}
+        response = requests.request("GET", self.url, headers=headers, data=payload)
+        if response.status_code == 200:
+            all_info = response.json()
+            return all_info
+        else:
+            return 'Qate'
+
+
 class RequestAPI:
     url = 'https://api.quotable.io/random'
 
@@ -82,37 +98,70 @@ async def read_items(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
-@app.get('/countries')
-def countries():
-    return countries_db
-
-
-@app.get('/countries/{name}')
-def countries(name):
-    if name in countries_db:
-        return countries_db[name]
-    else:
-        return 'Qate'
-
-
-# quote
-"""@app.get('/quotes/{name}')
-def quotes_for_colleagues(name):
-    my_request = RequestAPI()
-    return my_request.get_text_with_quote_for_name(name)"""
-
-
-@app.get('/quotes/{name}', response_class=HTMLResponse)
-async def read_item(request: Request, name):
-    my_request = RequestAPI()
-    text = my_request.get_text_with_quote_for_name(name)
-    return templates.TemplateResponse("quotes.html", {
-        "request": request, "name": text})
+@app.get('/about', response_class=HTMLResponse)
+async def read_about(request: Request):
+    return templates.TemplateResponse("about.html", {"request": request})
 
 
 @app.get('/quotes')
 async def just_qoute(request: Request):
     my_request_quote = RequestAPI()
     text = my_request_quote.get_content()
+    link_text = "generation by site('https://api.quotable.io/random')..."
     return templates.TemplateResponse("quotes.html", {
-        "request": request, "name": text})
+        "request": request, "name": text, "link_text": link_text})
+
+
+@app.get('/quotes/{name}', response_class=HTMLResponse)
+async def read_item(request: Request, name):
+    name_col = name
+    my_request = RequestAPI()
+    text = my_request.get_content()
+    return templates.TemplateResponse("quotes.html", {
+        "request": request, "name": name_col + ', this is quot for you', "text": text})
+
+
+@app.get('/pandemic', response_class=HTMLResponse)
+async def read_pandemic(request: Request):
+    my_request = RequestCOVID()
+    global_stat_info = my_request.get_covid()
+    Global = global_stat_info['Global']
+    NewConfirmed = Global['NewConfirmed']
+    TotalConfirmed = Global['TotalConfirmed']
+    NewDeaths = Global['NewDeaths']
+    TotalDeaths = Global['TotalDeaths']
+    NewRecovered = Global['NewRecovered']
+    TotalRecovered = Global['TotalRecovered']
+    Date = Global['Date'].split("T")
+    Dates = Date[1].split(".")
+
+    return templates.TemplateResponse("pandemic.html",
+                                      {"request": request,
+                                       "NewConfirmed": NewConfirmed,
+                                       "TotalConfirmed": TotalConfirmed,
+                                       "NewDeaths": NewDeaths,
+                                       "TotalDeaths": TotalDeaths,
+                                       "NewRecovered": NewRecovered,
+                                       "TotalRecovered": TotalRecovered,
+                                       "Day": Date[0],
+                                       "Time": Dates[0]
+                                       })
+
+
+@app.get('/countries/{name}')
+def countries(request: Request, name):
+    if name in countries_db:
+        name_countries = name
+        info = countries_db[name]
+        pop = info['population']
+        city = info['city']
+        pres = info['president']
+        return templates.TemplateResponse("country.html", {
+            "request": request,
+            "name": name_countries,
+            "pop": pop,
+            "city": city,
+            "pres": pres
+        })
+    else:
+        return 'Qate'
