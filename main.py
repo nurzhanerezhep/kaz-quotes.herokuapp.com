@@ -128,21 +128,30 @@ async def read_pandemic(request: Request):
     Global = global_stat_info['Global']
     NewConfirmed = Global['NewConfirmed']
     TotalConfirmed = Global['TotalConfirmed']
+    t_mln = str(TotalConfirmed)[0:3]
+    t_min = str(TotalConfirmed)[3:6]
+    t_n = str(TotalConfirmed)[6:9]
     NewDeaths = Global['NewDeaths']
     TotalDeaths = Global['TotalDeaths']
+    d_mln = str(TotalDeaths)[0:1]
+    d_min = str(TotalDeaths)[1:4]
+    d_n = str(TotalDeaths)[4:7]
     NewRecovered = Global['NewRecovered']
     TotalRecovered = Global['TotalRecovered']
+    rec_mln = str(TotalRecovered)[0:3]
+    rec_min = str(TotalRecovered)[3:6]
+    rec_n = str(TotalRecovered)[6:9]
     Date = Global['Date'].split("T")
     Dates = Date[1].split(".")
 
     return templates.TemplateResponse("pandemic.html",
                                       {"request": request,
                                        "NewConfirmed": NewConfirmed,
-                                       "TotalConfirmed": TotalConfirmed,
+                                       "TotalConfirmed": t_mln+" million "+t_min+" thousand "+t_n,
                                        "NewDeaths": NewDeaths,
-                                       "TotalDeaths": TotalDeaths,
+                                       "TotalDeaths": d_mln+" million "+d_min+" thousand "+d_n,
                                        "NewRecovered": NewRecovered,
-                                       "TotalRecovered": TotalRecovered,
+                                       "TotalRecovered": rec_mln+" million "+rec_min+" thousand "+rec_n,
                                        "Day": Date[0],
                                        "Time": Dates[0]
                                        })
